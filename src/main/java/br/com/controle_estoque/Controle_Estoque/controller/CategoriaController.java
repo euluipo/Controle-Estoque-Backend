@@ -1,7 +1,7 @@
 package br.com.controle_estoque.Controle_Estoque.controller;
 
 import br.com.controle_estoque.Controle_Estoque.model.Categoria;
-import br.com.controle_estoque.Controle_Estoque.CategoriaService;
+import br.com.controle_estoque.Controle_Estoque.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
