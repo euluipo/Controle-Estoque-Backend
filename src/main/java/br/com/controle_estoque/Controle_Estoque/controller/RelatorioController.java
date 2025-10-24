@@ -2,6 +2,8 @@ package br.com.controle_estoque.Controle_Estoque.controller;
 
 import br.com.controle_estoque.Controle_Estoque.dto.ListaPrecoDTO;
 import br.com.controle_estoque.Controle_Estoque.service.RelatorioService;
+import br.com.controle_estoque.Controle_Estoque.dto.BalancoGeralDTO;
+import br.com.controle_estoque.Controle_Estoque.dto.ProdutoAbaixoMinimoDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,5 +23,15 @@ public class RelatorioController {
     @GetMapping("/lista-de-precos")
     public List<ListaPrecoDTO> getListaDePrecos() {
         return relatorioService.gerarListaDePrecos();
+    }
+
+    @GetMapping("/balanco-financeiro")
+    public BalancoGeralDTO getBalancoFinanceiro() {
+        return relatorioService.gerarBalancoFisicoFinanceiro();
+    }
+
+    @GetMapping("/produtos-abaixo-minimo")
+    public List<ProdutoAbaixoMinimoDTO> getProdutosAbaixoMinimo() {
+        return relatorioService.gerarRelatorioProdutosAbaixoMinimo();
     }
 }
