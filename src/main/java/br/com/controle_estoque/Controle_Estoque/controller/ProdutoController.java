@@ -2,6 +2,7 @@ package br.com.controle_estoque.Controle_Estoque.controller;
 
 import br.com.controle_estoque.Controle_Estoque.model.Produto;
 import br.com.controle_estoque.Controle_Estoque.service.ProdutoService;
+import br.com.controle_estoque.Controle_Estoque.dto.ReajustePrecoDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -57,6 +58,28 @@ public class ProdutoController {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    // Endpoint para REAJUSTAR PREÇO em todos os produtos
+    @PostMapping("/reajustar-preco")
+    public ResponseEntity<Void> reajustarPrecoDeTodosOsProdutos(@RequestBody ReajustePrecoDTO reajusteDTO) {
+        try {
+            produtoService.reajustarPrecos(reajusteDTO.getPercentual());
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    // Endpoint para REAJUSTAR PREÇO de um produto específico
+    @PostMapping("/{id}/reajustar-preco")
+    public ResponseEntity<Produto> reajustarPrecoDeProdutoUnico(@PathVariable Long id, @RequestBody ReajustePrecoDTO reajusteDTO) {
+        try {
+            Produto produtoAtualizado = produtoService.reajustarPrecoUnitario(id, reajusteDTO.getPercentual());
+            return ResponseEntity.ok(produtoAtualizado);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 }
