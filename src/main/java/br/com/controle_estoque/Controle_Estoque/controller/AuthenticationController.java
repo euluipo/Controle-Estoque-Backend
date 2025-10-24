@@ -5,6 +5,7 @@ import br.com.controle_estoque.Controle_Estoque.dto.AuthenticationResponseDTO;
 import br.com.controle_estoque.Controle_Estoque.dto.RegisterRequestDTO;
 import br.com.controle_estoque.Controle_Estoque.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,11 +22,13 @@ public class AuthenticationController {
     private final AuthenticationService service;
 
     @PostMapping("/register")
+    @SecurityRequirements({})
     public ResponseEntity<AuthenticationResponseDTO> register(@RequestBody RegisterRequestDTO request) {
         return ResponseEntity.ok(service.register(request));
     }
 
     @PostMapping("/login")
+    @SecurityRequirements({})
     public ResponseEntity<AuthenticationResponseDTO> authenticate(@RequestBody AuthenticationRequestDTO request) {
         return ResponseEntity.ok(service.authenticate(request));
     }
