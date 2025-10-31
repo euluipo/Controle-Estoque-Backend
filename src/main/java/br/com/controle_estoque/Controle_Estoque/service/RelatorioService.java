@@ -5,8 +5,13 @@ import br.com.controle_estoque.Controle_Estoque.repository.ProdutoRepository;
 import br.com.controle_estoque.Controle_Estoque.dto.BalancoGeralDTO;
 import br.com.controle_estoque.Controle_Estoque.dto.BalancoItemDTO;
 import br.com.controle_estoque.Controle_Estoque.dto.ProdutoAbaixoMinimoDTO;
+import br.com.controle_estoque.Controle_Estoque.dto.ProdutoMovimentacaoDTO;
+import br.com.controle_estoque.Controle_Estoque.dto.ProdutosPorCategoriaDTO;
+import br.com.controle_estoque.Controle_Estoque.dto.RelatorioMovimentacaoDTO;
+import br.com.controle_estoque.Controle_Estoque.repository.MovimentacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.math.BigDecimal;
@@ -16,6 +21,9 @@ public class RelatorioService {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+
+    @Autowired
+    private MovimentacaoRepository movimentacaoRepository;
 
     public List<ListaPrecoDTO> gerarListaDePrecos() {
         return produtoRepository.findListaDePrecos();
@@ -33,5 +41,16 @@ public class RelatorioService {
 
     public List<ProdutoAbaixoMinimoDTO> gerarRelatorioProdutosAbaixoMinimo() {
         return produtoRepository.findProdutosAbaixoDoMinimo();
+    }
+
+    public List<ProdutosPorCategoriaDTO> gerarRelatorioProdutosPorCategoria() {
+        return produtoRepository.countProdutosByCategoria();
+    }
+
+    public RelatorioMovimentacaoDTO gerarRelatorioMaioresMovimentacoes() {
+        ProdutoMovimentacaoDTO maisEntradas = movimentacaoRepository.findProdutoComMaisEntradas();
+        ProdutoMovimentacaoDTO maisSaidas = movimentacaoRepository.findProdutoComMaisSaidas();
+
+        return new RelatorioMovimentacaoDTO(maisSaidas, maisEntradas);
     }
 }

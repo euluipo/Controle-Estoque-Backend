@@ -4,6 +4,8 @@ import br.com.controle_estoque.Controle_Estoque.dto.ListaPrecoDTO;
 import br.com.controle_estoque.Controle_Estoque.service.RelatorioService;
 import br.com.controle_estoque.Controle_Estoque.dto.BalancoGeralDTO;
 import br.com.controle_estoque.Controle_Estoque.dto.ProdutoAbaixoMinimoDTO;
+import br.com.controle_estoque.Controle_Estoque.dto.ProdutosPorCategoriaDTO;
+import br.com.controle_estoque.Controle_Estoque.dto.RelatorioMovimentacaoDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,5 +35,15 @@ public class RelatorioController {
     @GetMapping("/produtos-abaixo-minimo")
     public List<ProdutoAbaixoMinimoDTO> getProdutosAbaixoMinimo() {
         return relatorioService.gerarRelatorioProdutosAbaixoMinimo();
+    }
+
+    @GetMapping("/produtos-por-categoria")
+    public List<ProdutosPorCategoriaDTO> getProdutosPorCategoria() {
+        return relatorioService.gerarRelatorioProdutosPorCategoria();
+    }
+
+    @GetMapping("/maiores-movimentacoes")
+    public RelatorioMovimentacaoDTO getMaioresMovimentacoes() {
+        return relatorioService.gerarRelatorioMaioresMovimentacoes();
     }
 }
