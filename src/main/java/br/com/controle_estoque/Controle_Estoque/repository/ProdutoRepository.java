@@ -4,6 +4,7 @@ import br.com.controle_estoque.Controle_Estoque.dto.ListaPrecoDTO;
 import br.com.controle_estoque.Controle_Estoque.model.Produto;
 import br.com.controle_estoque.Controle_Estoque.dto.BalancoItemDTO;
 import br.com.controle_estoque.Controle_Estoque.dto.ProdutoAbaixoMinimoDTO;
+import br.com.controle_estoque.Controle_Estoque.dto.ProdutosPorCategoriaDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -24,4 +25,10 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
             "WHERE p.quantidadeEmEstoque < p.quantidadeMinima " +
             "ORDER BY p.nome ASC")
     List<ProdutoAbaixoMinimoDTO> findProdutosAbaixoDoMinimo();
+
+    @Query("SELECT new br.com.controle_estoque.Controle_Estoque.dto.ProdutosPorCategoriaDTO(p.categoria.nome, COUNT(p.id)) " +
+            "FROM Produto p " +
+            "GROUP BY p.categoria.nome " +
+            "ORDER BY p.categoria.nome ASC")
+    List<ProdutosPorCategoriaDTO> countProdutosByCategoria();
 }
