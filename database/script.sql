@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS movimentacoes (
     produto_id BIGINT NOT NULL,
     data_movimentacao DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     quantidade_movimentada INT NOT NULL,
-    tipo_movimentacao ENUM('Entrada', 'Saída') NOT NULL,
+    tipo_movimentacao ENUM('ENTRADA', 'SAIDA') NOT NULL,
     FOREIGN KEY (produto_id) REFERENCES produtos(id)
 );
 
@@ -79,6 +79,6 @@ INSERT INTO produtos (nome, preco_unitario, unidade, quantidade_em_estoque, quan
 
 -- Inserindo movimentações de exemplo
 INSERT INTO movimentacoes (produto_id, data_movimentacao, quantidade_movimentada, tipo_movimentacao) VALUES
-(1, '2025-09-29 10:00:00', 10, 'Saída'),
-(6, '2025-09-29 11:30:00', 30, 'Entrada'),
-(3, '2025-09-30 09:15:00', 20, 'Saída');
+(1, '2025-09-29 10:00:00', 10, 'SAIDA'),
+(6, '2025-09-29 11:30:00', 30, 'ENTRADA'),
+(3, '2025-09-30 09:15:00', 20, 'SAIDA');
