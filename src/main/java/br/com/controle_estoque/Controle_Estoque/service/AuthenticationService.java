@@ -15,34 +15,57 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
+    // Repositório responsável pelo acesso e manipulação de dados do usuário
     private final UsuarioRepository repository;
+
+    // Responsável por criptografar e verificar senhas
     private final PasswordEncoder passwordEncoder;
+
+    // Serviço responsável pela geração e validação de tokens JWT
     private final JwtService jwtService;
+
+    // Gerenciador de autenticação do Spring Security
     private final AuthenticationManager authenticationManager;
 
+    // Função: Cadastrar um novo usuário no sistema e gerar um token JWT.
     public AuthenticationResponseDTO register(RegisterRequestDTO request) {
         var usuario = Usuario.builder()
                 .nome(request.getNome())
                 .usuario(request.getUsuario())
                 .email(request.getEmail())
                 .telefone(request.getTelefone())
+                // Criptografa a senha antes de salvar no banco
                 .senha(passwordEncoder.encode(request.getSenha()))
                 .build();
+
+        // Salva o usuário no banco de dados
         repository.save(usuario);
+
+        // Gera o token JWT para o novo usuário
         var jwtToken = jwtService.generateToken(usuario);
+
+        // Retorna o token de autenticação
         return AuthenticationResponseDTO.builder().token(jwtToken).build();
     }
 
+    // Função: Autenticar um usuário existente e retornar um token JWT.
     public AuthenticationResponseDTO authenticate(AuthenticationRequestDTO request) {
+        // Verifica as credenciais do usuário
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsuario(),
                         request.getSenha()
                 )
         );
+
+        // Busca o usuário autenticado no banco
         var usuario = repository.findByUsuario(request.getUsuario())
                 .orElseThrow();
+
+        // Gera um novo token JWT para o usuário
         var jwtToken = jwtService.generateToken(usuario);
+
+        // Retorna o token de autenticação
         return AuthenticationResponseDTO.builder().token(jwtToken).build();
     }
 }
