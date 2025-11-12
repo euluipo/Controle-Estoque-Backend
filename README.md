@@ -5,7 +5,9 @@ Projeto desenvolvido para a disciplina **Sistemas Distribuídos e Mobile** da **
 
 ---
 
-**Link Repositório Back-end:** https://github.com/euluipo/Controle-Estoque-Frontend
+**Link Repositório Front-end React:** https://github.com/euluipo/Controle-Estoque-Frontend-React
+
+**Link Repositório Front-end Java Swing:** https://github.com/euluipo/Controle-Estoque-Frontend
 
 ---
 
@@ -34,13 +36,26 @@ Projeto desenvolvido para a disciplina **Sistemas Distribuídos e Mobile** da **
 - **Documentação da API:** Swagger / OpenAPI 3 (via Springdoc)
 - **Controle de Versão:** Git + GitHub
 
-## ⚙️ Funcionalidades do Sistema
+## 🧭 Requisitos do Sistema
 
-- **CRUD de Categorias** via API REST (`/api/categorias`)
-- **CRUD de Produtos** via API REST (`/api/produtos`)
-- **Movimentação de Estoque (Entrada/Saída)**
-- **Reajuste de preços em massa e unitariamente por percentual**
-- **Endpoints para geração de relatórios**
+### ✅ Requisitos Funcionais
+1. O sistema permite o **cadastro, consulta, atualização e exclusão de produtos e categorias** por meio de **API REST** (`/api/produtos`, `/api/categorias`).  
+2. O sistema possibilita o **registro de movimentações de estoque**, diferenciando **entradas e saídas**.  
+3. O sistema permite o **reajuste de preços**, tanto de forma **unitária** quanto **em massa**, com base em um percentual definido pelo usuário.  
+4. O sistema gera **relatórios consolidados** de produtos, movimentações e balanço geral.  
+5. O sistema permite a **consulta e exibição da lista de preços atualizada**.  
+6. O sistema oferece **autenticação e controle de usuários**, restringindo o acesso a endpoints protegidos.  
+7. O sistema permitie **integração com banco de dados relacional**, garantindo persistência confiável dos dados.  
+
+---
+
+### ⚙️ Requisitos Não Funcionais
+1. Desenvolvido em **Java 21** com **Spring Boot**.  
+2. Arquitetura organizada segundo o padrão **MVC (Model-View-Controller)**.  
+3. **Persistência de dados** implementada com **JPA/Hibernate** e **MySQL**.  
+4. **Segurança** implementada nos endpoints e **criptografia de senhas** para proteção de credenciais.  
+5. **Código documentado** seguindo o padrão **Javadoc**, com clareza nas classes, métodos e atributos.  
+6. **Execução eficiente**, com tempos de resposta adequados nas operações de consulta e gravação.   
 
 - ## 📖 Documentação da API (Swagger)
 
