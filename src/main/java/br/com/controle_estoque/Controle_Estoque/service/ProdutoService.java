@@ -11,29 +11,55 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Serviço responsável pela lógica de negócios e operações CRUD
+ * relacionadas à entidade {@link Produto}.
+ */
 @Service
 public class ProdutoService {
 
-    // Repositório responsável pelo acesso e manipulação dos dados dos produtos
+    /**
+     * Repositório responsável pelo acesso e manipulação dos dados dos produtos.
+     */
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    // Função: Listar todos os produtos cadastrados no banco de dados.
+    /**
+     * Lista todos os produtos cadastrados no banco de dados.
+     *
+     * @return Uma lista ({@code List<Produto>}) de todos os produtos.
+     */
     public List<Produto> listarTodos() {
         return produtoRepository.findAll();
     }
 
-    // Função: Buscar um produto específico pelo seu ID.
+    /**
+     * Busca um produto específico pelo seu ID.
+     *
+     * @param id O ID do produto a ser buscado.
+     * @return Um {@link Optional} contendo o produto se encontrado, ou {@link Optional#empty()} caso contrário.
+     */
     public Optional<Produto> buscarPorId(Long id) {
         return produtoRepository.findById(id);
     }
 
-    // Função: Salvar um novo produto no banco de dados.
+    /**
+     * Salva um novo produto no banco de dados.
+     *
+     * @param produto O objeto {@link Produto} a ser salvo.
+     * @return O produto salvo (com o ID preenchido pela persistência).
+     */
     public Produto salvar(Produto produto) {
         return produtoRepository.save(produto);
     }
 
-    // Função: Atualizar os dados de um produto existente.
+    /**
+     * Atualiza os dados de um produto existente com base no seu ID.
+     *
+     * @param id O ID do produto a ser atualizado.
+     * @param produtoDetalhes Um objeto {@link Produto} contendo os novos dados.
+     * @return O produto atualizado, ou {@code null} se o produto não foi encontrado.
+     */
     public Produto atualizar(Long id, Produto produtoDetalhes) {
         return produtoRepository.findById(id).map(produto -> {
             // Atualiza os campos principais do produto
@@ -50,7 +76,12 @@ public class ProdutoService {
         }).orElse(null);
     }
 
-    // Função: Deletar um produto do banco de dados pelo seu ID.
+    /**
+     * Deleta um produto do banco de dados pelo seu ID.
+     *
+     * @param id O ID do produto a ser deletado.
+     * @return {@code true} se o produto foi deletado com sucesso, {@code false} se o produto não existia.
+     */
     public boolean deletarPorId(Long id) {
         if (produtoRepository.existsById(id)) {
             produtoRepository.deleteById(id);
@@ -59,7 +90,13 @@ public class ProdutoService {
         return false;
     }
 
-    // Função: Reajustar o preço de todos os produtos com base em um percentual.
+    /**
+     * Reajusta o preço de todos os produtos com base em um percentual.
+     * A operação é transacional.
+     *
+     * @param percentual O percentual de reajuste (ex: 10 para 10%).
+     * @throws IllegalArgumentException Se o percentual for nulo ou zero.
+     */
     @Transactional
     public void reajustarPrecos(BigDecimal percentual) {
         if (percentual == null || percentual.compareTo(BigDecimal.ZERO) == 0) {
@@ -80,7 +117,16 @@ public class ProdutoService {
         produtoRepository.saveAll(todosOsProdutos);
     }
 
-    // Função: Reajustar o preço de um produto específico com base em um percentual.
+    /**
+     * Reajusta o preço de um produto específico com base em um percentual.
+     * A operação é transacional.
+     *
+     * @param produtoId O ID do produto a ser reajustado.
+     * @param percentual O percentual de reajuste (ex: 10 para 10%).
+     * @return O produto com o preço atualizado.
+     * @throws IllegalArgumentException Se o percentual for nulo ou zero.
+     * @throws RuntimeException Se o produto não for encontrado pelo ID.
+     */
     @Transactional
     public Produto reajustarPrecoUnitario(Long produtoId, BigDecimal percentual) {
         if (percentual == null || percentual.compareTo(BigDecimal.ZERO) == 0) {

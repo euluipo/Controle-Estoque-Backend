@@ -11,23 +11,45 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Serviço responsável pela lógica de negócios de movimentações de estoque,
+ * atualizando o inventário do produto correspondente e registrando o histórico.
+ */
 @Service
 public class MovimentacaoService {
 
-    // Repositório responsável por manipular os dados das movimentações
+    /**
+     * Repositório responsável por manipular os dados das movimentações.
+     */
     @Autowired
     private MovimentacaoRepository movimentacaoRepository;
 
-    // Repositório responsável pelo acesso e atualização de dados dos produtos
+    /**
+     * Repositório responsável pelo acesso e atualização de dados dos produtos.
+     */
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    // Função: Listar todas as movimentações registradas no banco de dados.
+    /**
+     * Função: Listar todas as movimentações registradas no banco de dados.
+     *
+     * @return Uma lista ({@code List<Movimentacao>}) de todas as movimentações.
+     */
     public List<Movimentacao> listarTodas() {
         return movimentacaoRepository.findAll();
     }
 
-    // Função: Registrar uma nova movimentação de entrada ou saída de produto.
+    /**
+     * Função: Registrar uma nova movimentação de entrada ou saída de produto.
+     * <p>
+     * A operação é transacional, garantindo que a movimentação e a atualização
+     * do estoque ocorram de forma atômica.
+     *
+     * @param movimentacao O objeto {@link Movimentacao} a ser registrado.
+     * @return A movimentação salva (com ID preenchido pela persistência).
+     * @throws RuntimeException Se o produto associado à movimentação não for encontrado.
+     * @throws RuntimeException Se for uma SAIDA e a quantidade movimentada for maior que o estoque atual.
+     */
     @Transactional
     public Movimentacao registrarMovimentacao(Movimentacao movimentacao) {
         // Busca o produto no banco de dados e valida sua existência

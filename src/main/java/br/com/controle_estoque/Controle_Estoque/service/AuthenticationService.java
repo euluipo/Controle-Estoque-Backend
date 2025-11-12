@@ -8,26 +8,46 @@ import br.com.controle_estoque.Controle_Estoque.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
+/**
+ * Serviço responsável pela lógica de autenticação e registro de usuários,
+ * gerenciando a criação de contas e a emissão de tokens JWT.
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    // Repositório responsável pelo acesso e manipulação de dados do usuário
+    /**
+     * Repositório responsável pelo acesso e manipulação de dados do {@link Usuario}.
+     */
     private final UsuarioRepository repository;
 
-    // Responsável por criptografar e verificar senhas
+    /**
+     * Responsável por criptografar e verificar senhas.
+     */
     private final PasswordEncoder passwordEncoder;
 
-    // Serviço responsável pela geração e validação de tokens JWT
+    /**
+     * Serviço responsável pela geração e validação de tokens JWT.
+     */
     private final JwtService jwtService;
 
-    // Gerenciador de autenticação do Spring Security
+    /**
+     * Gerenciador de autenticação do Spring Security.
+     */
     private final AuthenticationManager authenticationManager;
 
-    // Função: Cadastrar um novo usuário no sistema e gerar um token JWT.
+    /**
+     * Função: Cadastrar um novo usuário no sistema e gerar um token JWT.
+     *
+     * @param request O DTO ({@link RegisterRequestDTO}) contendo os dados do novo usuário.
+     * @return Um {@link AuthenticationResponseDTO} contendo o token JWT gerado para o usuário registrado.
+     */
     public AuthenticationResponseDTO register(RegisterRequestDTO request) {
         var usuario = Usuario.builder()
                 .nome(request.getNome())
@@ -48,7 +68,14 @@ public class AuthenticationService {
         return AuthenticationResponseDTO.builder().token(jwtToken).build();
     }
 
-    // Função: Autenticar um usuário existente e retornar um token JWT.
+    /**
+     * Função: Autenticar um usuário existente e retornar um token JWT.
+     *
+     * @param request O DTO ({@link AuthenticationRequestDTO}) contendo as credenciais (usuário e senha).
+     * @return Um {@link AuthenticationResponseDTO} contendo o token JWT gerado para o usuário autenticado.
+     * @throws AuthenticationException Se as credenciais forem inválidas.
+     * @throws NoSuchElementException Se o usuário for autenticado mas não for encontrado no repositório.
+     */
     public AuthenticationResponseDTO authenticate(AuthenticationRequestDTO request) {
         // Verifica as credenciais do usuário
         authenticationManager.authenticate(

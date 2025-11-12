@@ -12,35 +12,64 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controlador REST que expõe os endpoints para operações CRUD
+ * (Criar, Ler, Atualizar, Deletar) relacionadas a {@link Categoria}.
+ */
 @RestController
 @RequestMapping("/api/categorias")
 @Tag(name = "Categorias", description = "Endpoints para gerenciar categorias de produtos")
 public class CategoriaController {
 
+    /**
+     * Serviço injetado para lidar com a lógica de negócios das categorias.
+     */
     @Autowired
     private CategoriaService categoriaService;
 
-    // Endpoint para LISTAR
+    /**
+     * Endpoint para LISTAR todas as categorias cadastradas.
+     *
+     * @return Uma lista ({@code List<Categoria>}) de todas as categorias.
+     */
     @GetMapping
     public List<Categoria> listarTodasAsCategorias() {
         return categoriaService.listarTodas();
     }
 
-    // Endpoint para BUSCAR
+    /**
+     * Endpoint para BUSCAR uma categoria específica pelo seu ID.
+     *
+     * @param id O ID da categoria a ser buscada.
+     * @return Um {@link ResponseEntity} com a categoria (status 200 OK) se encontrada,
+     * ou status 404 Not Found caso contrário.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Categoria> buscarCategoriaPorId(@PathVariable Long id) {
         Optional<Categoria> categoria = categoriaService.buscarPorId(id);
         return categoria.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Endpoint para CRIAR
+    /**
+     * Endpoint para CRIAR uma nova categoria.
+     *
+     * @param categoria O objeto {@link Categoria} enviado no corpo da requisição.
+     * @return Um {@link ResponseEntity} com a categoria criada (status 201 Created).
+     */
     @PostMapping
     public ResponseEntity<Categoria> criarCategoria(@RequestBody Categoria categoria) {
         Categoria novaCategoria = categoriaService.salvar(categoria);
         return new ResponseEntity<>(novaCategoria, HttpStatus.CREATED);
     }
 
-    // Endpoint para ATUALIZAR
+    /**
+     * Endpoint para ATUALIZAR uma categoria existente.
+     *
+     * @param id O ID da categoria a ser atualizada.
+     * @param categoriaDetalhes O objeto {@link Categoria} com os novos dados.
+     * @return Um {@link ResponseEntity} com a categoria atualizada (status 200 OK)
+     * ou status 404 Not Found se a categoria não existir.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Categoria> atualizarCategoria(@PathVariable Long id, @RequestBody Categoria categoriaDetalhes) {
         Categoria categoriaAtualizada = categoriaService.atualizar(id, categoriaDetalhes);
@@ -52,7 +81,13 @@ public class CategoriaController {
         }
     }
 
-    // Endpoint para DELETAR
+    /**
+     * Endpoint para DELETAR uma categoria pelo seu ID.
+     *
+     * @param id O ID da categoria a ser deletada.
+     * @return Um {@link ResponseEntity} com status 204 No Content se deletada com sucesso,
+     * ou status 404 Not Found se a categoria não existir.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarCategoria(@PathVariable Long id) {
         if (categoriaService.buscarPorId(id).isPresent()) {
