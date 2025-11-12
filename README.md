@@ -3,6 +3,12 @@
 
 Projeto desenvolvido para a disciplina **Sistemas Distribuídos e Mobile** da **Universidade do Sul de Santa Catarina - UNISUL**.
 
+---
+
+**Link Repositório Back-end:** https://github.com/euluipo/Controle-Estoque-Frontend
+
+---
+
 ## 🎓 Informações Acadêmicas
 
 - **Disciplina:** Sistemas Distribuídos e Mobile
