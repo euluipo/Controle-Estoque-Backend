@@ -37,7 +37,7 @@ public class MovimentacaoController {
 
     /**
      * Endpoint para REGISTRAR uma nova movimentação (entrada ou saída).
-     * <p>
+     *
      * Este endpoint aciona o {@link MovimentacaoService} que atualiza
      * o estoque do produto correspondente.
      *

@@ -41,7 +41,7 @@ public class MovimentacaoService {
 
     /**
      * Função: Registrar uma nova movimentação de entrada ou saída de produto.
-     * <p>
+     *
      * A operação é transacional, garantindo que a movimentação e a atualização
      * do estoque ocorram de forma atômica.
      *
