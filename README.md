@@ -36,28 +36,37 @@ Projeto desenvolvido para a disciplina **Sistemas Distribuídos e Mobile** da **
 - **Documentação da API:** Swagger / OpenAPI 3 (via Springdoc)
 - **Controle de Versão:** Git + GitHub
 
+---
+
 ## 🧭 Requisitos do Sistema
 
-### ✅ Requisitos Funcionais
-1. O sistema permite o **cadastro, consulta, atualização e exclusão de produtos e categorias** por meio de **API REST** (`/api/produtos`, `/api/categorias`).  
-2. O sistema possibilita o **registro de movimentações de estoque**, diferenciando **entradas e saídas**.  
-3. O sistema permite o **reajuste de preços**, tanto de forma **unitária** quanto **em massa**, com base em um percentual definido pelo usuário.  
-4. O sistema gera **relatórios consolidados** de produtos, movimentações e balanço geral.  
-5. O sistema permite a **consulta e exibição da lista de preços atualizada**.  
-6. O sistema oferece **autenticação e controle de usuários**, restringindo o acesso a endpoints protegidos.  
-7. O sistema permitie **integração com banco de dados relacional**, garantindo persistência confiável dos dados.  
+## ✅ Requisitos Funcionais (RF)
+
+| ID | Descrição |
+| :--- | :--- |
+| **RF-001** | O sistema permite o **cadastro, consulta, atualização e exclusão de produtos e categorias** por meio de **API REST** (`/api/produtos`, `/api/categorias`). |
+| **RF-002** | O sistema possibilita o **registro de movimentações de estoque**, diferenciando **entradas e saídas**. |
+| **RF-003** | O sistema permite o **reajuste de preços**, tanto de forma **unitária** quanto **em massa**, com base em um percentual definido pelo usuário. |
+| **RF-004** | O sistema gera **relatórios consolidados** de produtos, movimentações e balanço geral. |
+| **RF-005** | O sistema permite a **consulta e exibição da lista de preços atualizada**. |
+| **RF-006** | O sistema oferece **autenticação e controle de usuários**, restringindo o acesso a endpoints protegidos. |
+| **RF-007** | O sistema permite **integração com banco de dados relacional**, garantindo persistência confiável dos dados. |
+
+
+## ⚙️ Requisitos Não Funcionais (RNF)
+
+| ID | Descrição |
+| :--- | :--- |
+| **RNF-001** | Desenvolvido em **Java 21** com **Spring Boot**. |
+| **RNF-002** | Arquitetura organizada segundo o padrão **MVC (Model-View-Controller)**. |
+| **RNF-003** | **Persistência de dados** implementada com **JPA/Hibernate** e **MySQL**. |
+| **RNF-004** | **Segurança** implementada nos endpoints e **criptografia de senhas** para proteção de credenciais. |
+| **RNF-005** | **Código documentado** seguindo o padrão **Javadoc**, com clareza nas classes, métodos e atributos. |
+| **RNF-006** | **Execução eficiente**, com tempos de resposta adequados nas operações de consulta e gravação. |   
 
 ---
 
-### ⚙️ Requisitos Não Funcionais
-1. Desenvolvido em **Java 21** com **Spring Boot**.  
-2. Arquitetura organizada segundo o padrão **MVC (Model-View-Controller)**.  
-3. **Persistência de dados** implementada com **JPA/Hibernate** e **MySQL**.  
-4. **Segurança** implementada nos endpoints e **criptografia de senhas** para proteção de credenciais.  
-5. **Código documentado** seguindo o padrão **Javadoc**, com clareza nas classes, métodos e atributos.  
-6. **Execução eficiente**, com tempos de resposta adequados nas operações de consulta e gravação.   
-
-- ## 📖 Documentação da API (Swagger)
+## 📖 Documentação da API (Swagger)
 
 A API possui uma documentação interativa gerada automaticamente com o Swagger. Através dela, é possível ver todos os endpoints disponíveis, seus parâmetros, os modelos de dados e **testar a API diretamente pelo navegador**.
 
